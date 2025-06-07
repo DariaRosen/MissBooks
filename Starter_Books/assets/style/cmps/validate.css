@@ -1,0 +1,12 @@
+.validate-container {
+    text-align: center;
+}
+
+.validate-container>section>p {
+    text-decoration: underline;
+}
+
+.validate-container button {
+    background-color: transparent;
+    color: white;
+}
