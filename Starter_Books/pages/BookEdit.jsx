@@ -11,11 +11,11 @@ export function BookEdit() {
         <section onSubmit={onSaveBook} className="book-edit">
             <h1>{isEdit ? 'Edit' : 'Add'} Book</h1>
             <form>
-                <label htmlFor="vendor">Vendor</label>
-                <input type="text" name="vendor" id="vendor" />
+                <label htmlFor="title">Title</label>
+                <input type="text" name="title" id="title" />
 
-                <label htmlFor="Price">Price</label>
-                <input type="number" name="Price" id="Price" />
+                <label htmlFor="Amount">Amount</label>
+                <input type="number" name="Amount" id="Amount" />
                 <section className="btns flex">
                     <button>Save</button>
                     <button type="button" className="back-btn" >Back</button>

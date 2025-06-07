@@ -18,10 +18,10 @@ function query(filterBy = {}) {
         .then(books => {
             if (filterBy.txt) {
                 const regExp = new RegExp(filterBy.txt, 'i')
-                books = books.filter(book => regExp.test(book.vendor))
+                books = books.filter(book => regExp.test(book.title))
             }
-            if (filterBy.minPrice) {
-                books = books.filter(book => book.Price >= filterBy.minPrice)
+            if (filterBy.minAmount) {
+                books = books.filter(book => book.Amount >= filterBy.minAmount)
             }
             return books
         })
@@ -44,12 +44,12 @@ function save(book) {
     }
 }
 
-function getEmptyBook(vendor = '', Price = '') {
-    return { vendor, Price }
+function getEmptyBook(title = '', Amount = '') {
+    return { title, Amount }
 }
 
 function getDefaultFilter() {
-    return { txt: '', minPrice: '' }
+    return { txt: '', minAmount: '' }
 }
 
 
@@ -68,17 +68,24 @@ function _createBooks() {
     let books = loadFromStorage(BOOK_KEY)
     if (!books || !books.length) {
         books = [
-            _createBook('Metus Hendrerit', 300),
-            _createBook('Harry Potter', 120),
-            _createBook('Its just a dog', 50),
-            _createBook('Unboared', 150)
+            _createBook('Harry Potter', 120, 'A young wizard embarks on a journey to defeat the dark wizard Voldemort.'),
+            _createBook('The Hobbit', 80, 'A hobbit named Bilbo Baggins goes on an unexpected adventure with a group of dwarves.'),
+            _createBook('The Great Gatsby', 200, 'A story of love, wealth, and the American Dream set in the 1920s.'),
         ]
         saveToStorage(BOOK_KEY, books)
     }
 }
 
-function _createBook(title, price = 250) {
-    const book = getEmptyBook(title, price)
+function _createBook(title, amount = 250, description = '') {
+    const book = getEmptyBook(title, amount)
     book.id = makeId()
+    book.description = description
+
+    book.listPrice = {
+        amount,
+        currencyCode: "EUR",
+        isOnSale: Math.random() < 0.5, // randomly true or false
+    }
+
     return book
 }

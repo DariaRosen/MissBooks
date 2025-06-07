@@ -34,16 +34,16 @@ export function BookFilter({ filterBy, onSetFilter }) {
     }
     */
 
-    const { txt, minPrice } = filterByToEdit
+    const { txt, minAmount } = filterByToEdit
     return (
         <section className="book-filter">
             <h2>Filter Our Books</h2>
             <form>
-                <label htmlFor="txt">Vendor</label>
+                <label htmlFor="txt">Title</label>
                 <input onChange={handleChange} value={txt} name="txt" type="text" id="txt" />
 
-                <label htmlFor="minPrice">Min Price</label>
-                <input onChange={handleChange} value={minPrice} name="minPrice" type="number" id="minPrice" />
+                <label htmlFor="minAmount">Min Amount</label>
+                <input onChange={handleChange} value={minAmount} name="minAmount" type="number" id="minAmount" />
             </form>
         </section>
     )

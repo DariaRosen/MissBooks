@@ -28,11 +28,11 @@ export function BookDetails() {
     if (!book) return <div>Loading...</div>
     return (
         <section className="book-details">
-            <h1>Book Vendor: {book.vendor}</h1>
-            <h1>Book Price: {book.Price}</h1>
+            <h1>Book Title: {book.title}</h1>
+            <h1>Book Amount: {book.Amount}</h1>
             <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis quae fuga eveniet, quisquam ducimus modi optio in alias accusantium corrupti veritatis commodi tenetur voluptate deserunt nihil quibusdam. Expedita, architecto omnis?</p>
             
-             <img src={`../assets/img/${_bookName()}.jpg`} alt="book-image" />
+             <img src={`./assets/img/${_bookName()}.jpg`} alt="book-image" />
             <button onClick={onBack}>Back</button>
             <section>
                 <Link to={`/book/${book.prevBookId}`}><button>Prev Book</button></Link>
@@ -43,7 +43,5 @@ export function BookDetails() {
 }
 
 function _bookName(){
-    a = Math.floor(Math.random() * 20 + 1);
-    console.log('a:', a)
-    return a
+    return Math.floor(Math.random() * 20 + 1);
 }

@@ -347,13 +347,13 @@
    *
    *   let searchParams = new URLSearchParams([
    *     ['sort', 'name'],
-   *     ['sort', 'price']
+   *     ['sort', 'amount']
    *   ]);
    *
    * you can do:
    *
    *   let searchParams = createSearchParams({
-   *     sort: ['name', 'price']
+   *     sort: ['name', 'amount']
    *   });
    */
   function createSearchParams(init) {
