@@ -20,8 +20,8 @@ function query(filterBy = {}) {
                 const regExp = new RegExp(filterBy.txt, 'i')
                 books = books.filter(book => regExp.test(book.vendor))
             }
-            if (filterBy.minSpeed) {
-                books = books.filter(book => book.speed >= filterBy.minSpeed)
+            if (filterBy.minPrice) {
+                books = books.filter(book => book.Price >= filterBy.minPrice)
             }
             return books
         })
@@ -44,12 +44,12 @@ function save(book) {
     }
 }
 
-function getEmptyBook(vendor = '', speed = '') {
-    return { vendor, speed }
+function getEmptyBook(vendor = '', Price = '') {
+    return { vendor, Price }
 }
 
 function getDefaultFilter() {
-    return { txt: '', minSpeed: '' }
+    return { txt: '', minPrice: '' }
 }
 
 
@@ -68,17 +68,17 @@ function _createBooks() {
     let books = loadFromStorage(BOOK_KEY)
     if (!books || !books.length) {
         books = [
-            _createBook('audu', 300),
-            _createBook('fiak', 120),
-            _createBook('subali', 50),
-            _createBook('mitsu', 150)
+            _createBook('Metus Hendrerit', 300),
+            _createBook('Harry Potter', 120),
+            _createBook('Its just a dog', 50),
+            _createBook('Unboared', 150)
         ]
         saveToStorage(BOOK_KEY, books)
     }
 }
 
-function _createBook(vendor, speed = 250) {
-    const book = getEmptyBook(vendor, speed)
+function _createBook(title, price = 250) {
+    const book = getEmptyBook(title, price)
     book.id = makeId()
     return book
 }

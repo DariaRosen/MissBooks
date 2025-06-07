@@ -14,8 +14,8 @@ export function BookEdit() {
                 <label htmlFor="vendor">Vendor</label>
                 <input type="text" name="vendor" id="vendor" />
 
-                <label htmlFor="speed">Speed</label>
-                <input type="number" name="speed" id="speed" />
+                <label htmlFor="Price">Price</label>
+                <input type="number" name="Price" id="Price" />
                 <section className="btns flex">
                     <button>Save</button>
                     <button type="button" className="back-btn" >Back</button>
