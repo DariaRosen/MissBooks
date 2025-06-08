@@ -29,8 +29,16 @@ export function BookDetails() {
     return (
         <section className="book-details">
             <h1>Book Title: {book.title}</h1>
-            {/* <h2>Book Subtitle: {book.subtitle}</h2>
-            <h2>Book Author: {book.authors.join(', ')}</h2> */}
+            <h2>Subtitle: {book.subtitle}</h2>
+            <h3>Authors: {book.authors.join(', ')}</h3>
+            <h4>Published: {book.publishedDate}</h4>
+            <h4>Page Count: {book.pageCount}</h4>
+            <h4>Language: {book.language}</h4>
+            <h4>Categories: {book.categories.join(', ')}</h4>
+
+
+
+
             <h1>Book Amount: {book.Amount}</h1>
             <p>{book.description}</p>
             <img src={book.imgUrl} alt="book-image" />
