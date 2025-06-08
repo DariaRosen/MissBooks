@@ -31,14 +31,15 @@ export function BookDetails() {
             <h1>Book Title: {book.title}</h1>
             <h2>Subtitle: {book.subtitle}</h2>
             <h3>Authors: {book.authors.join(', ')}</h3>
-            <h4>Published: {book.publishedDate}</h4>
-            <h4>Page Count: {book.pageCount}</h4>
+            <h4>Published: {book.publishedDate} {publishedDate(book.publishedDate)}</h4>
+            <h4>Page Count: {book.pageCount} {readingDifficulty(book.pageCount)}</h4>
             <h4>Language: {book.language}</h4>
             <h4>Categories: {book.categories.join(', ')}</h4>
-
-
-
-
+            <h4 className={amountColor(book.listPrice.amount)}>
+                Price: {book.listPrice.amount} {book.listPrice.currencyCode}
+            </h4>
+            {book.listPrice && book.listPrice.isOnSale && (
+                <img src="./assets/img/sale.jpg" alt="On Sale" className="sale-badge" />)}
             <h1>Book Amount: {book.Amount}</h1>
             <p>{book.description}</p>
             <img src={book.imgUrl} alt="book-image" />
@@ -50,4 +51,25 @@ export function BookDetails() {
         </section>
     )
 }
+
+function readingDifficulty(pageCount) {
+    console.log('pageCount:', pageCount)
+    if (pageCount > 500) return '   (Serious reading)'
+    if (pageCount > 200) return '   (Descent reading)'
+    if (pageCount < 100) return '   (Light reading)'
+    return 'Unknown reading difficulty'
+}
+function publishedDate(publishedDate) {
+    const currentYear = new Date().getFullYear()
+    const yearDiff = currentYear - publishedDate
+    if (yearDiff < 1) return '   (New Release)'
+    if (yearDiff < 10) return '   (Vintage Release)'
+    return ''
+}
+function amountColor(amount) {
+    if (amount > 150) return 'price-high'
+    if (amount < 20) return 'price-low'
+    return ''
+}
+
 
