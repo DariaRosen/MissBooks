@@ -30,9 +30,8 @@ export function BookDetails() {
         <section className="book-details">
             <h1>Book Title: {book.title}</h1>
             <h1>Book Amount: {book.Amount}</h1>
-            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Facilis quae fuga eveniet, quisquam ducimus modi optio in alias accusantium corrupti veritatis commodi tenetur voluptate deserunt nihil quibusdam. Expedita, architecto omnis?</p>
-            
-             <img src={`./assets/img/${_bookName()}.jpg`} alt="book-image" />
+            <p>{book.description}</p>
+            <img src={book.imgUrl} alt="book-image" />
             <button onClick={onBack}>Back</button>
             <section>
                 <Link to={`/book/${book.prevBookId}`}><button>Prev Book</button></Link>
@@ -42,6 +41,3 @@ export function BookDetails() {
     )
 }
 
-function _bookName(){
-    return Math.floor(Math.random() * 20 + 1);
-}

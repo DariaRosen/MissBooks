@@ -79,8 +79,8 @@ function _createBooks() {
 function _createBook(title, amount = 250, description = '') {
     const book = getEmptyBook(title, amount)
     book.id = makeId()
-    book.description = description
-
+    book.description = description || _getBookPreviewText(book)
+    book.imgUrl = `./assets/img/${_bookName()}.jpg` // Random image from assets
     book.listPrice = {
         amount,
         currencyCode: "EUR",
@@ -88,4 +88,13 @@ function _createBook(title, amount = 250, description = '') {
     }
 
     return book
+}
+
+function _bookName() {
+    return Math.floor(Math.random() * 20 + 1);
+}
+
+// Generates a description text for the book
+function _getBookPreviewText(book) {
+    return `Discover "${book.title}", a captivating story brought to you by ${book.vendor || "a renowned publisher"}. Dive into a world of imagination and adventure.`
 }
