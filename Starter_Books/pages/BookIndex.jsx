@@ -3,8 +3,6 @@ import { BookList } from "../cmps/BookList.jsx"
 import { bookService } from "../services/book.service.js"
 
 const { useEffect, useState } = React
-const { Link } = ReactRouterDOM
-
 
 export function BookIndex() {
     const [books, setBooks] = useState(null)
@@ -39,14 +37,9 @@ export function BookIndex() {
     if (!books) return <div>Loading...</div>
     return (
         <section className="book-index">
-
-            <nav>
-                <Link to="/book/edit">Edit Book</Link>
-               
-            </nav>
-            
             <BookFilter onSetFilter={onSetFilter} filterBy={filterBy} />
             <BookList
+            debugger
                 books={books}
                 onRemoveBook={onRemoveBook}
             />

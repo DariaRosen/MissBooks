@@ -29,6 +29,8 @@ export function BookDetails() {
     return (
         <section className="book-details">
             <h1>Book Title: {book.title}</h1>
+            {/* <h2>Book Subtitle: {book.subtitle}</h2>
+            <h2>Book Author: {book.authors.join(', ')}</h2> */}
             <h1>Book Amount: {book.Amount}</h1>
             <p>{book.description}</p>
             <img src={book.imgUrl} alt="book-image" />
