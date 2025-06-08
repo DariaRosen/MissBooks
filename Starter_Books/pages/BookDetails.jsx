@@ -1,4 +1,5 @@
 import { bookService } from "../services/book.service.js"
+import { LongTxt } from "../cmps/LongTxt.jsx"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
@@ -36,12 +37,12 @@ export function BookDetails() {
             <h4>Language: {book.language}</h4>
             <h4>Categories: {book.categories.join(', ')}</h4>
             <h4 className={amountColor(book.listPrice.amount)}>
-                Price: {book.listPrice.amount} {book.listPrice.currencyCode}
+                Amount: {book.listPrice.amount} {book.listPrice.currencyCode}
             </h4>
             {book.listPrice && book.listPrice.isOnSale && (
                 <img src="./assets/img/sale.jpg" alt="On Sale" className="sale-badge" />)}
-            <h1>Book Amount: {book.Amount}</h1>
-            <p>{book.description}</p>
+            <h3>Book description:</h3>
+            <LongTxt txt={book.description} />
             <img src={book.imgUrl} alt="book-image" />
             <button onClick={onBack}>Back</button>
             <section>
@@ -67,8 +68,8 @@ function publishedDate(publishedDate) {
     return ''
 }
 function amountColor(amount) {
-    if (amount > 150) return 'price-high'
-    if (amount < 20) return 'price-low'
+    if (amount > 150) return 'amount-high'
+    if (amount < 20) return 'amount-low'
     return ''
 }
 

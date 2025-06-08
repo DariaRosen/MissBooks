@@ -19,11 +19,11 @@
     display: block;
     margin: auto;
 }
-.price-high {
+.amount-high {
     color: red;
 }
 
-.price-low {
+.amount-low {
     color: green;
 }
 
