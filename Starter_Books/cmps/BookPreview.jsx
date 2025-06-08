@@ -15,8 +15,6 @@ export function BookPreview({ book }) {
                     className="on-sale-badge"
                 />
             )}
-
-
             <h5>Book description:</h5>
             <p>{book.description}</p>
         </article>
