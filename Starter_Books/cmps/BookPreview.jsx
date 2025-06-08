@@ -4,9 +4,19 @@ export function BookPreview({ book }) {
         <article className="book-preview">
             <h2>Title: {book.title}</h2>
             <h4>Book Price: {book.listPrice && book.listPrice.amount} {book.listPrice && book.listPrice.currencyCode}</h4>
-            <p>Status: {book.listPrice && book.listPrice.isOnSale ? 'On Sale!' : 'Regular Price'}</p>
-            {/*<img src={`../assets/img/${book.vendor}.png`} alt="book-image" />*/}
+            {/* Main book image */}
             <img src={book.imgUrl} alt="book-image" />
+
+            {/* Show onSale badge only if on sale */}
+            {book.listPrice && book.listPrice.isOnSale && (
+                <img
+                    src="./assets/img/sale.jpg"
+                    alt="on sale"
+                    className="on-sale-badge"
+                />
+            )}
+
+
             <h5>Book description:</h5>
             <p>{book.description}</p>
         </article>
