@@ -455,14 +455,7 @@ else {
     }
 }
 
-export const bookService = {
-    query,
-    get,
-    remove,
-    save,
-    getEmptyBook,
-    getDefaultFilter,
-}
+
 
 function query(filterBy = {}) {
     return storageService.query(BOOK_KEY)
@@ -473,6 +466,10 @@ function query(filterBy = {}) {
             }
             if (filterBy.minAmount) {
                 books = books.filter(book => book.Amount >= filterBy.minAmount)
+            }
+            if (filterBy.authors) {
+                console.log("filterBy.authors", filterBy.authors);
+                books = books.filter(book => book.authors.includes(filterBy.authors) )
             }
             return books
         })
@@ -600,3 +597,21 @@ function _createBooksDemo() {
     return books
 }
 
+function getAuthors() {
+
+    const books = loadFromStorage(BOOK_KEY) || []
+    const authors = books.map((book, index, arr)=>{
+        return book.authors
+    })
+    //console.log(authors.flat())
+    return [...new Set(authors.flat())]
+}
+   export const bookService = {
+    query,
+    get,
+    remove,
+    save,
+    getEmptyBook,
+    getDefaultFilter,
+    getAuthors,
+    }

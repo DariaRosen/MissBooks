@@ -1,40 +1,43 @@
+import { bookService } from "../services/book.service.js"
 
 const { useState, useEffect } = React
-export function BookFilter({ filterBy, onSetFilter }) {
 
+export function BookFilter({ filterBy, onSetFilter }) {
     const [filterByToEdit, setFilterByToEdit] = useState(filterBy)
+    const [availableAuthors, setAvailableAuthors] = useState([])
 
     useEffect(() => {
         onSetFilter(filterByToEdit)
     }, [filterByToEdit])
 
+    
+    
+    //console.log(authors1);
+    
+    useEffect(() => {
+        const authors = bookService.getAuthors()
+        setAvailableAuthors(authors)
+    }, [])
+
     function handleChange({ target }) {
-        let { value, name: field } = target
-        switch (target.type) {
+        let { value, name: field, type } = target
+        switch (type) {
             case 'range':
             case 'number':
-                value = +target.value
+                value = +value
                 break
             case 'checkbox':
                 value = target.checked
                 break
+            case 'select-multiple':
+                value = Array.from(target.selectedOptions, option => option.value)
+                break
         }
-        setFilterByToEdit((prevFilter) => ({ ...prevFilter, [field]: value }))
+        setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
-    /* 
-    function handleTxtChange({ target }) {
-        const value = target.value
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, txt: value }))
-    }
-    
-    function handleMinSpeedChange({ target }) {
-        const value = target.value
-        setFilterByToEdit(prevFilter => ({ ...prevFilter, minSpeed: value }))
-    }
-    */
+    const { txt, minAmount, authors } = filterByToEdit
 
-    const { txt, minAmount } = filterByToEdit
     return (
         <section className="book-filter">
             <h2>Filter Our Books</h2>
@@ -44,7 +47,31 @@ export function BookFilter({ filterBy, onSetFilter }) {
 
                 <label htmlFor="minAmount">Min Amount</label>
                 <input onChange={handleChange} value={minAmount} name="minAmount" type="number" id="minAmount" />
+
+                <label htmlFor="authors">Authors</label>
+                <select onChange={handleChange} value={authors} name="authors" id="authors">
+                    <option value="">All Authors</option>
+                    {availableAuthors.map(author => (
+                        <option key={author} value={author}>
+                            {author}
+                        </option>
+                    ))}
+                </select>
             </form>
         </section>
     )
 }
+
+
+
+/*
+function handleTxtChange({ target }) {
+    const value = target.value
+    setFilterByToEdit(prevFilter => ({ ...prevFilter, txt: value }))
+}
+ 
+function handleMinSpeedChange({ target }) {
+    const value = target.value
+    setFilterByToEdit(prevFilter => ({ ...prevFilter, minSpeed: value }))
+}
+*/

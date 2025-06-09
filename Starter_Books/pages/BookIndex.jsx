@@ -31,7 +31,10 @@ export function BookIndex() {
     }
 
     function onSetFilter(filterBy) {
+        console.log(filterBy);
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy }))
+        
+        
     }
 
     if (!books) return <div>Loading...</div>
@@ -39,7 +42,6 @@ export function BookIndex() {
         <section className="book-index">
             <BookFilter onSetFilter={onSetFilter} filterBy={filterBy} />
             <BookList
-            debugger
                 books={books}
                 onRemoveBook={onRemoveBook}
             />
