@@ -46,7 +46,7 @@ export function BookFilter({ filterBy, onSetFilter }) {
                 <input onChange={handleChange} value={txt} name="txt" type="text" id="txt" />
 
                 <label htmlFor="minAmount">Min Amount</label>
-                <input onChange={handleChange} value={minAmount} name="minAmount" type="number" id="minAmount" />
+                <input onChange={handleChange || ''} value={minAmount} name="minAmount" type="number" id="minAmount" /> {/*use empty string avoid aapearens of 0*/}
 
                 <label htmlFor="authors">Authors</label>
                 <select onChange={handleChange} value={authors} name="authors" id="authors">
