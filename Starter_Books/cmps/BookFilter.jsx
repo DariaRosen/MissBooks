@@ -9,10 +9,6 @@ export function BookFilter({ filterBy, onSetFilter }) {
     useEffect(() => {
         onSetFilter(filterByToEdit)
     }, [filterByToEdit])
-
-    
-    
-    //console.log(authors1);
     
     useEffect(() => {
         const authors = bookService.getAuthors()
@@ -21,6 +17,7 @@ export function BookFilter({ filterBy, onSetFilter }) {
 
     function handleChange({ target }) {
         let { value, name: field, type } = target
+        
         switch (type) {
             case 'range':
             case 'number':
@@ -46,7 +43,7 @@ export function BookFilter({ filterBy, onSetFilter }) {
                 <input onChange={handleChange} value={txt} name="txt" type="text" id="txt" />
 
                 <label htmlFor="minAmount">Min Amount</label>
-                <input onChange={handleChange || ''} value={minAmount} name="minAmount" type="number" id="minAmount" /> {/*use empty string avoid aapearens of 0*/}
+                <input onChange={handleChange } value={minAmount || ''} name="minAmount" type="number" id="minAmount" /> {/*use empty string avoid aapearens of 0*/}
 
                 <label htmlFor="authors">Authors</label>
                 <select onChange={handleChange} value={authors} name="authors" id="authors">

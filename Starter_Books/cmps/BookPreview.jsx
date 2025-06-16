@@ -1,4 +1,4 @@
-
+import { LongTxt } from "../cmps/LongTxt.jsx"
 export function BookPreview({ book }) {
     return (
         <article className="book-preview">
@@ -16,7 +16,7 @@ export function BookPreview({ book }) {
                 />
             )}
             <h5>Book description:</h5>
-            <p>{book.description}</p>
+            <LongTxt txt={book.description} />            
         </article>
     )
 }

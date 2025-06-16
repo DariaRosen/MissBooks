@@ -10,6 +10,7 @@ import { AboutUs } from "./pages/AboutUs.jsx"
 import { BookIndex } from "./pages/BookIndex.jsx"
 import { HomePage } from "./pages/HomePage.jsx"
 import { BookDetails } from "./pages/BookDetails.jsx"
+import { UserMsg } from "./cmps/UserMsg.jsx"
 
 export function App() {
 
@@ -32,6 +33,7 @@ export function App() {
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>
+                <UserMsg />
             </section>
         </Router>
     )
