@@ -5,6 +5,7 @@ import { showErrorMsg, showSuccessMsg } from "../services/event-bus.service.js"
 import { getTruthyValues } from "../services/util.service.js"
 
 const { useEffect, useState } = React
+const {Link} = ReactRouterDOM
 
 export function BookIndex() {
     const [books, setBooks] = useState(null)
@@ -26,7 +27,7 @@ export function BookIndex() {
     function onRemoveBook(bookId) {
         bookService.remove(bookId)
             .then(() => {
-                setBooks(books => books.filter(book => book.id !== bookId))                
+                setBooks(books => books.filter(book => book.id !== bookId))
                 showSuccessMsg('Book removed successfully!')
             })
             .catch(err => {
@@ -36,16 +37,18 @@ export function BookIndex() {
     }
 
     function onSetFilter(filterBy) {
-        console.log(filterBy);
         setFilterBy(prevFilter => ({ ...prevFilter, ...filterBy })) // save current props (filterBy overwhrite properties in prevFilter if exist )
-        
-        
+
+
     }
 
     if (!books) return <div>Loading...</div>
     return (
         <section className="book-index">
             <BookFilter onSetFilter={onSetFilter} filterBy={filterBy} />
+            <section>
+                <Link to="/book/edit">Add Book</Link>
+            </section>
             <BookList
                 books={books}
                 onRemoveBook={onRemoveBook}
