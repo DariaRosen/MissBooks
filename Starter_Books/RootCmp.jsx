@@ -22,14 +22,12 @@ export function App() {
                     <Routes>
                         <Route path="/" element={<Navigate to="/home" />} />
                         <Route path="/home" element={<HomePage />} />
-                        <Route path="/about" element={<AboutUs />} />
-                        <Route path="/book" element={<BookIndex />}>
-                            <Route path="/book/edit" element={<BookEdit />} />
-                            <Route path="/book/edit/:bookId" element={<BookEdit />} />
-                            {/* <Route path="/book/team" element={<Team />} /> */}
+                        <Route path="/about" element={<AboutUs />} >
                         </Route>
                         <Route path="/book" element={<BookIndex />} />
                         <Route path="/book/:bookId" element={<BookDetails />} />
+                        <Route path="/book/edit" element={<BookEdit />} />
+                        <Route path="/book/edit/:bookId" element={<BookEdit />} />
                         <Route path="*" element={<NotFound />} />
                     </Routes>
                 </main>

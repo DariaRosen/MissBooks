@@ -3,7 +3,7 @@ export function BookPreview({ book }) {
     return (
         <article className="book-preview">
             <h2>Title: {book.title}</h2>
-            <h4>Book Amount: {book.listPrice && book.listPrice.amount} {book.listPrice && book.listPrice.currencyCode}</h4>
+            <h4>Price: {book.listPrice && book.listPrice.price} {book.listPrice && book.listPrice.currencyCode}</h4>
             {/* Main book image */}
             <img src={book.imgUrl} alt="book-image" />
 

@@ -17,6 +17,7 @@ export function BookFilter({ filterBy, onSetFilter }) {
 
     function handleChange({ target }) {
         let { value, name: field, type } = target
+        console.log("00000000000000000000");
         
         switch (type) {
             case 'range':
@@ -33,8 +34,8 @@ export function BookFilter({ filterBy, onSetFilter }) {
         setFilterByToEdit(prevFilter => ({ ...prevFilter, [field]: value }))
     }
 
-    const { txt, minAmount, authors } = filterByToEdit
-
+    const { txt, minPrice, authors } = filterByToEdit
+    
     return (
         <section className="book-filter">
             <h2>Filter Our Books</h2>
@@ -42,8 +43,8 @@ export function BookFilter({ filterBy, onSetFilter }) {
                 <label htmlFor="txt">Title</label>
                 <input onChange={handleChange} value={txt} name="txt" type="text" id="txt" />
 
-                <label htmlFor="minAmount">Min Amount</label>
-                <input onChange={handleChange } value={minAmount || ''} name="minAmount" type="number" id="minAmount" /> {/*use empty string avoid aapearens of 0*/}
+                <label htmlFor="minPrice">Min Price</label>
+                <input onChange={handleChange } value={minPrice || ''} name="minPrice" type="number" id="minPrice" /> {/*use empty string avoid aapearens of 0*/}
 
                 <label htmlFor="authors">Authors</label>
                 <select onChange={handleChange} value={authors} name="authors" id="authors">

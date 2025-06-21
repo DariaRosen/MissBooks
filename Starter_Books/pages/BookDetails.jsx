@@ -36,8 +36,8 @@ export function BookDetails() {
             <h4>Page Count: {book.pageCount} {readingDifficulty(book.pageCount)}</h4>
             <h4>Language: {book.language}</h4>
             <h4>Categories: {book.categories.join(', ')}</h4>
-            <h4 className={amountColor(book.listPrice.amount)}>
-                Amount: {book.listPrice.amount} {book.listPrice.currencyCode}
+            <h4 className={priceColor(book.listPrice.price)}>
+                Price: {book.listPrice.price} {book.listPrice.currencyCode}
             </h4>
             {book.listPrice && book.listPrice.isOnSale && (
                 <img src="./assets/img/sale.jpg" alt="On Sale" className="sale-badge" />)}
@@ -67,9 +67,9 @@ function publishedDate(publishedDate) {
     if (yearDiff < 10) return '   (Vintage Release)'
     return ''
 }
-function amountColor(amount) {
-    if (amount > 150) return 'amount-high'
-    if (amount < 20) return 'amount-low'
+function priceColor(price) {
+    if (price > 150) return 'price-high'
+    if (price < 20) return 'price-low'
     return ''
 }
 
