@@ -606,6 +606,22 @@ function getAuthors() {
     //console.log(authors.flat())
     return [...new Set(authors.flat())]
 }
+
+function addReview(bookId, review) {
+    // Use the existing 'get' function to retrieve the book by ID
+    return get(bookId).then(book => {
+        // Initialize the reviews array if it doesn't exist
+        if (!book.reviews) book.reviews = []
+
+        // Add the new review
+        book.reviews.push(review)
+
+        // Save the updated book back to storage
+        return save(book)
+    })
+}
+
+
    export const bookService = {
     query,
     get,
@@ -614,4 +630,5 @@ function getAuthors() {
     getEmptyBook,
     getDefaultFilter,
     getAuthors,
+    addReview,
     }
