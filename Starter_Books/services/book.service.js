@@ -612,7 +612,7 @@ function addReview(bookId, review) {
     return get(bookId).then(book => {
         // Initialize the reviews array if it doesn't exist
         if (!book.reviews) book.reviews = []
-
+        review.id = utilService.makeId() // Make sure each review has a unique ID
         // Add the new review
         book.reviews.push(review)
 
@@ -620,6 +620,19 @@ function addReview(bookId, review) {
         return save(book)
     })
 }
+
+function removeReview(bookId, reviewId) {
+    return get(bookId).then(book => {
+        if (!book.reviews) return book
+
+        // Filter out the review with the given ID
+        book.reviews = book.reviews.filter(review => review.id !== reviewId)
+
+        // Save the updated book
+        return save(book)
+    })
+}
+
 
 
    export const bookService = {
@@ -631,4 +644,5 @@ function addReview(bookId, review) {
     getDefaultFilter,
     getAuthors,
     addReview,
+    removeReview,
     }

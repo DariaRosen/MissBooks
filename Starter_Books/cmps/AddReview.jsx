@@ -12,6 +12,12 @@ export function AddReview({ book }) {
         setIsModalOpen(true)
     }
 
+    function onDeleteReview(reviewId) {
+        bookService.removeReview(book.id, reviewId).then(updatedBook => {
+            setReviews(updatedBook.reviews)
+        })
+    }
+
     // Handle form submission to save a new review
     function onSaveReview(ev) {
         ev.preventDefault()
@@ -32,6 +38,10 @@ export function AddReview({ book }) {
         })
     }
 
+    function renderStars(rating) {
+    return '★'.repeat(rating) + '☆'.repeat(5 - rating)
+}
+
     return (
         <section className="add-review">
             {/* Button to trigger review form */}
@@ -43,14 +53,16 @@ export function AddReview({ book }) {
                     <h3>Reviews</h3>
                     <ul>
                         {reviews.map((review, idx) => (
-                            <li key={idx}>
+                            <div key={review.id} className="review">
                                 <p>
-                                    <strong>{review.fullname}</strong> rated it{" "}
-                                    {'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}
+                                    <strong>{review.fullname}</strong> rated it   {renderStars(review.rating)}
+                                   
                                 </p>
                                 <p>Read on: {review.readAt}</p>
-                            </li>
+                                <button onClick={() => onDeleteReview(review.id)}>Delete review</button>
+                            </div>
                         ))}
+
                     </ul>
                 </div>
             ) : (
