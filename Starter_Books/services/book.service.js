@@ -20,7 +20,7 @@ const books = [
         "imgUrl": "./assets/img/20.jpg",
         "language": "en",
         "listPrice": {
-            "amount": 109,
+            "price": 109,
             "currencyCode": "EUR",
             "isOnSale": false
         }
@@ -42,7 +42,7 @@ const books = [
         "imgUrl": "./assets/img/14.jpg",
         "language": "sp",
         "listPrice": {
-            "amount": 44,
+            "price": 44,
             "currencyCode": "EUR",
             "isOnSale": true
         }
@@ -64,7 +64,7 @@ const books = [
         "imgUrl": "./assets/img/2.jpg",
         "language": "he",
         "listPrice": {
-            "amount": 108,
+            "price": 108,
             "currencyCode": "ILS",
             "isOnSale": false
         }
@@ -86,7 +86,7 @@ const books = [
         "imgUrl": "./assets/img/16.jpg",
         "language": "en",
         "listPrice": {
-            "amount": 30,
+            "price": 30,
             "currencyCode": "EUR",
             "isOnSale": true
         }
@@ -108,7 +108,7 @@ const books = [
         "imgUrl": "./assets/img/12.jpg",
         "language": "sp",
         "listPrice": {
-            "amount": 19,
+            "price": 19,
             "currencyCode": "USD",
             "isOnSale": false
         }
@@ -130,7 +130,7 @@ const books = [
         "imgUrl": "./assets/img/1.jpg",
         "language": "en",
         "listPrice": {
-            "amount": 91,
+            "price": 91,
             "currencyCode": "USD",
             "isOnSale": true
         }
@@ -152,7 +152,7 @@ const books = [
         "imgUrl": "./assets/img/14.jpg",
         "language": "he",
         "listPrice": {
-            "amount": 90,
+            "price": 90,
             "currencyCode": "USD",
             "isOnSale": false
         }
@@ -174,7 +174,7 @@ const books = [
         "imgUrl": "./assets/img/11.jpg",
         "language": "he",
         "listPrice": {
-            "amount": 176,
+            "price": 176,
             "currencyCode": "EUR",
             "isOnSale": false
         }
@@ -196,7 +196,7 @@ const books = [
         "imgUrl": "./assets/img/10.jpg",
         "language": "sp",
         "listPrice": {
-            "amount": 116,
+            "price": 116,
             "currencyCode": "USD",
             "isOnSale": true
         }
@@ -218,7 +218,7 @@ const books = [
         "imgUrl": "./assets/img/5.jpg",
         "language": "en",
         "listPrice": {
-            "amount": 145,
+            "price": 145,
             "currencyCode": "EUR",
             "isOnSale": false
         }
@@ -240,7 +240,7 @@ const books = [
         "imgUrl": "./assets/img/16.jpg",
         "language": "sp",
         "listPrice": {
-            "amount": 157,
+            "price": 157,
             "currencyCode": "ILS",
             "isOnSale": true
         }
@@ -262,7 +262,7 @@ const books = [
         "imgUrl": "./assets/img/17.jpg",
         "language": "sp",
         "listPrice": {
-            "amount": 57,
+            "price": 57,
             "currencyCode": "USD",
             "isOnSale": true
         }
@@ -284,7 +284,7 @@ const books = [
         "imgUrl": "./assets/img/8.jpg",
         "language": "en",
         "listPrice": {
-            "amount": 167,
+            "price": 167,
             "currencyCode": "ILS",
             "isOnSale": false
         }
@@ -306,7 +306,7 @@ const books = [
         "imgUrl": "./assets/img/3.jpg",
         "language": "he",
         "listPrice": {
-            "amount": 150,
+            "price": 150,
             "currencyCode": "USD",
             "isOnSale": true
         }
@@ -328,7 +328,7 @@ const books = [
         "imgUrl": "./assets/img/6.jpg",
         "language": "en",
         "listPrice": {
-            "amount": 58,
+            "price": 58,
             "currencyCode": "ILS",
             "isOnSale": true
         }
@@ -350,7 +350,7 @@ const books = [
         "imgUrl": "./assets/img/7.jpg",
         "language": "en",
         "listPrice": {
-            "amount": 78,
+            "price": 78,
             "currencyCode": "USD",
             "isOnSale": false
         }
@@ -372,7 +372,7 @@ const books = [
         "imgUrl": "./assets/img/10.jpg",
         "language": "en",
         "listPrice": {
-            "amount": 118,
+            "price": 118,
             "currencyCode": "ILS",
             "isOnSale": false
         }
@@ -394,7 +394,7 @@ const books = [
         "imgUrl": "./assets/img/12.jpg",
         "language": "he",
         "listPrice": {
-            "amount": 60,
+            "price": 60,
             "currencyCode": "EUR",
             "isOnSale": false
         }
@@ -416,7 +416,7 @@ const books = [
         "imgUrl": "./assets/img/20.jpg",
         "language": "he",
         "listPrice": {
-            "amount": 110,
+            "price": 110,
             "currencyCode": "USD",
             "isOnSale": true
         }
@@ -438,7 +438,7 @@ const books = [
         "imgUrl": "./assets/img/2.jpg",
         "language": "sp",
         "listPrice": {
-            "amount": 186,
+            "price": 186,
             "currencyCode": "ILS",
             "isOnSale": true
         }
@@ -464,8 +464,8 @@ function query(filterBy = {}) {
                 const regExp = new RegExp(filterBy.txt, 'i')
                 books = books.filter(book => regExp.test(book.title))
             }
-            if (filterBy.minAmount) {
-                books = books.filter(book => book.Amount >= filterBy.minAmount)
+            if (filterBy.minprice) {
+                books = books.filter(book => book.price >= filterBy.minprice)
             }
             if (filterBy.authors) {
                 console.log("filterBy.authors", filterBy.authors);
@@ -492,12 +492,12 @@ function save(book) {
     }
 }
 
-function getEmptyBook(title = '', Amount = '') {
-    return { title, Amount }
+function getEmptyBook(title = '', price = '') {
+    return { title, price }
 }
 
 function getDefaultFilter() {
-    return { txt: '', minAmount: '' }
+    return { txt: '', minprice: '' }
 }
 
 
@@ -529,13 +529,13 @@ function _createBooks() {
     }
 }
 
-// function _createBook(title, amount = 250, description = '') {
-//     const book = getEmptyBook(title, amount)
+// function _createBook(title, price = 250, description = '') {
+//     const book = getEmptyBook(title, price)
 //     book.id = makeId()
 //     book.description = description || _getBookPreviewText(book)
 //     book.imgUrl = `./assets/img/${_bookName()}.jpg` // Random image from assets
 //     book.listPrice = {
-//         amount,
+//         price,
 //         currencyCode: "EUR",
 //         isOnSale: Math.random() < 0.5, // randomly true or false
 //     }
@@ -586,7 +586,7 @@ function _createBooksDemo() {
             imgUrl: `./assets/img/${i+1}.jpg`,
             language: "en",
             listPrice: {
-                amount: utilService.getRandomIntInclusive(80, 500),
+                price: utilService.getRandomIntInclusive(80, 500),
                 currencyCode: "EUR",
                 isOnSale: Math.random() > 0.7
             }

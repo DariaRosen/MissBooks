@@ -1,5 +1,6 @@
 import { bookService } from "../services/book.service.js"
 import { LongTxt } from "../cmps/LongTxt.jsx"
+import { AddReview } from "../cmps/AddReview.jsx"
 
 const { useState, useEffect } = React
 const { useParams, useNavigate, Link } = ReactRouterDOM
@@ -44,6 +45,8 @@ export function BookDetails() {
             <h3>Book description:</h3>
             <LongTxt txt={book.description} />
             <img src={book.imgUrl} alt="book-image" />
+            <h2>Reviews: </h2>
+            <AddReview book={book} />
             <button onClick={onBack}>Back</button>
             <section>
                 <Link to={`/book/${book.prevBookId}`}><button>Prev Book</button></Link>

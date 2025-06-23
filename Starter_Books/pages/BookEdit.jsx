@@ -49,17 +49,17 @@ export function BookEdit() {
             .catch(err => console.log('err:', err))
     }
 
-    const { vendor, speed } = bookToEdit
-    console.log('vendor, speed :', vendor, speed )
+    const { title, price } = bookToEdit
+    console.log('title, price :', title, price )
     return (
         <section className="book-edit">
             <h1>{bookId ? 'Edit' : 'Add'} Book</h1>
             <form onSubmit={onSaveBook}>
-                <label htmlFor="vendor">Vendor</label>
-                <input onChange={handleChange} type="text" value={vendor} name="vendor" id="vendor" />
+                <label htmlFor="title">Title</label>
+                <input onChange={handleChange} type="text" value={title} name="title" id="title" />
 
-                <label htmlFor="speed">Speed</label>
-                <input onChange={handleChange} type="number" value={speed} name="speed" id="speed" />
+                <label htmlFor="price">Price</label>
+                <input onChange={handleChange} type="number" value={price} name="price" id="price" />
                 <button>Save</button>
             </form>
         </section>
