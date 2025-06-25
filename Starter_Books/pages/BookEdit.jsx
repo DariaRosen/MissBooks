@@ -1,17 +1,16 @@
 
 import { bookService } from "../services/book.service.js"
 import { loadFromStorage } from "../services/util.service.js"
+import { BookAdd } from "../cmps/BookAdd.jsx"
 
 const { useState, useEffect } = React
 const { useNavigate, useParams } = ReactRouterDOM
 
-console.log("000000000000000");
 export function BookEdit() {
 
     const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
     const { bookId } = useParams()
     const navigate = useNavigate()
-    console.log("111111111111111");
     useEffect(() => {
         if (bookId) loadBook()
     }, [])
@@ -50,7 +49,7 @@ export function BookEdit() {
     }
 
     const { title, price } = bookToEdit
-    console.log('title, price :', title, price )
+    console.log('title, price :', title, price)
     return (
         <section className="book-edit">
             <h1>{bookId ? 'Edit' : 'Add'} Book</h1>
@@ -60,6 +59,15 @@ export function BookEdit() {
 
                 <label htmlFor="price">Price</label>
                 <input onChange={handleChange} type="number" value={price} name="price" id="price" />
+
+                {!bookId && (
+                    <div>
+                        <br />
+                        <br />
+                        {<BookAdd />}
+                    </div>
+                )}
+
                 <button>Save</button>
             </form>
         </section>
