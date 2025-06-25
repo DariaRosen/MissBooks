@@ -1,4 +1,5 @@
 import { bookService } from "../services/book.service.js"
+
 const { useState } = React
 
 export function AddReview({ book }) {
@@ -39,8 +40,8 @@ export function AddReview({ book }) {
     }
 
     function renderStars(rating) {
-    return '★'.repeat(rating) + '☆'.repeat(5 - rating)
-}
+        return '★'.repeat(rating) + '☆'.repeat(5 - rating)
+    }
 
     return (
         <section className="add-review">
@@ -56,7 +57,7 @@ export function AddReview({ book }) {
                             <div key={review.id} className="review">
                                 <p>
                                     <strong>{review.fullname}</strong> rated it   {renderStars(review.rating)}
-                                   
+
                                 </p>
                                 <p>Read on: {review.readAt}</p>
                                 <button onClick={() => onDeleteReview(review.id)}>Delete review</button>
@@ -74,6 +75,7 @@ export function AddReview({ book }) {
                 <div className="modal">
                     <form className="review-form" onSubmit={onSaveReview}>
                         <label>
+                            {/* <h1 className="animate__animated animate__bounce">Full Name:</h1> */}
                             Full Name:
                             <input type="text" name="fullname" required />
                         </label>

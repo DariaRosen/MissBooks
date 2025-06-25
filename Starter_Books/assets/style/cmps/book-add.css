@@ -1,0 +1,39 @@
+.book-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    background-color: white;
+    border-radius: 4px;
+    overflow-y: auto;
+    z-index: 10;         /* Optional: bring it above other elements */
+    position: relative;  /* Optional: if it's inside absolute layout */
+}
+
+
+.book-list li {
+    display: flex;
+    align-items: center;          /* Vertically center the button */
+    justify-content: space-between;
+    padding: 6px 10px;
+    font-size: 14px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.book-title {
+    flex-grow: 1;                 /* Take remaining space */
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-right: 10px;           /* Space between title and button */
+}
+
+.book-list li button {
+    background-color: white;
+    border: none;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    padding: 2px 6px;
+    flex-shrink: 0;               /* Prevent the button from shrinking */
+}

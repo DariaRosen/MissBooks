@@ -448,12 +448,12 @@ const books = [
 if (!books || !books.length) {
     _createBooks()
 }
-else {
-    for (let i = 0; i < books.length; i++) {
-        books[i].id = books[i].id || makeId()
-        saveSingleBook(books[i]) // Save each book individually
-    }
-}
+// else {
+//     // for (let i = 0; i < books.length; i++) {
+//     //     books[i].id = books[i].id || makeId()
+//     //     saveSingleBook(books[i]) // Save each book individually
+//     // }
+// }
 
 
 
@@ -485,15 +485,36 @@ function remove(bookId) {
 }
 
 function save(book) {
+    console.log("book.id", book.id)
     if (book.id) {
+        console.log("33333333333")
         return storageService.put(BOOK_KEY, book)
     } else {
+        console.log("44444444")
         return storageService.post(BOOK_KEY, book)
     }
 }
 
-function getEmptyBook(title = '', price = '') {
-    return { title, price }
+function getEmptyBook(title = '', price = 0) {
+    
+    return {
+            title,
+            subtitle: utilService.makeLorem(4),
+            authors: [
+                utilService.makeLorem(1)
+            ],
+            publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+            description: utilService.makeLorem(20),
+            pageCount: utilService.getRandomIntInclusive(20, 600),
+            categories: [],
+            imgUrl: `./assets/img/${1}.jpg`,
+            language: "en",
+            listPrice: {
+                price,
+                currencyCode: "EUR",
+                isOnSale: Math.random() > 0.7
+            }
+        }
 }
 
 function getDefaultFilter() {
@@ -633,6 +654,33 @@ function removeReview(bookId, reviewId) {
     })
 }
 
+function addGoogleBook(googleBook) {
+    const id = googleBook.id
+    const title = googleBook.volumeInfo && googleBook.volumeInfo.title
+
+    const exists = booksDB.some(book => book.id === id || book.title === title)
+    if (exists) {
+        return Promise.resolve(null)
+    }
+
+    const bookToAdd = {
+        id: id,
+        title: title,
+        authors: (googleBook.volumeInfo && googleBook.volumeInfo.authors) || [],
+        description: (googleBook.volumeInfo && googleBook.volumeInfo.description) || '',
+        thumbnail: (googleBook.volumeInfo &&
+                    googleBook.volumeInfo.imageLinks &&
+                    googleBook.volumeInfo.imageLinks.thumbnail) || ''
+    }
+
+    booksDB.push(bookToAdd)
+    return Promise.resolve(bookToAdd)
+}
+
+
+function getBooks() {
+    return Promise.resolve(booksDB)
+}
 
 
    export const bookService = {
@@ -645,4 +693,6 @@ function removeReview(bookId, reviewId) {
     getAuthors,
     addReview,
     removeReview,
+    addGoogleBook,
+    getBooks,
     }

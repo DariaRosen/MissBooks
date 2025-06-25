@@ -8,6 +8,9 @@
 @import "base/layout.css";
 @import "base/forms.css";
 
+/* Lib */
+@import "../../lib/animate.css";
+
 /* Pages */
 @import "pages/home.css";
 @import "pages/about.css";
@@ -25,4 +28,5 @@
 @import "cmps/on-sale-badge.css";
 @import "cmps/user-msg.css";
 @import "cmps/add-review.css";
+@import "cmps/book-add.css";
 

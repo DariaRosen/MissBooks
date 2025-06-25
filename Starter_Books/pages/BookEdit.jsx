@@ -47,9 +47,11 @@ export function BookEdit() {
             })
             .catch(err => console.log('err:', err))
     }
+    const { title, listPrice } = bookToEdit
+    const price = listPrice.price
 
-    const { title, price } = bookToEdit
-    console.log('title, price :', title, price)
+    console.log('title, price :', title, listPrice)
+    console.log("booToedit", bookToEdit)
     return (
         <section className="book-edit">
             <h1>{bookId ? 'Edit' : 'Add'} Book</h1>
