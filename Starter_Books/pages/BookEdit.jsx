@@ -10,6 +10,26 @@ export function BookEdit() {
     const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
     const { bookId } = useParams()
     const navigate = useNavigate()
+    const [debouncedInputs, setDebouncedInputs] = useState({
+        title: bookToEdit.title || '',
+        price: (bookToEdit.listPrice && bookToEdit.listPrice.price) || 0,
+    })
+
+    useEffect(() => {
+        const timeoutId = setTimeout(() => {
+            setBookToEdit(prevBook => ({
+                ...prevBook,
+                title: debouncedInputs.title,
+                listPrice: {
+                    ...prevBook.listPrice,
+                    price: +debouncedInputs.price,
+                }
+            }))
+        }, 300)
+
+        return () => clearTimeout(timeoutId)
+    }, [debouncedInputs])
+
     useEffect(() => {
         if (bookId) loadBook()
     }, [])
@@ -24,18 +44,13 @@ export function BookEdit() {
     }
 
     function handleChange({ target }) {
-        let { value, name: field } = target
-        switch (target.type) {
-            case 'range':
-            case 'number':
-                value = +target.value
-                break
-            case 'checkbox':
-                value = target.checked
-                break
-        }
-        setBookToEdit((prevBook) => ({ ...prevBook, [field]: value }))
+        const { name, value } = target
+        setDebouncedInputs(prev => ({
+            ...prev,
+            [name]: value,
+        }))
     }
+
 
     function onSaveBook(ev) {
         console.log("onSaveBook");
@@ -67,10 +82,22 @@ export function BookEdit() {
             <h1>{bookId ? 'Edit' : 'Add'} Book</h1>
             <form onSubmit={onSaveBook}>
                 <label htmlFor="title">Title</label>
-                <input onChange={handleChange} type="text" value={title} name="title" id="title" />
+                <input
+                    onChange={handleChange}
+                    type="text"
+                    value={debouncedInputs.title}
+                    name="title"
+                    id="title"
+                />
 
                 <label htmlFor="price">Price</label>
-                <input onChange={handleChange} type="number" value={price} name="price" id="price" />
+                <input
+                    onChange={handleChange}
+                    type="number"
+                    value={debouncedInputs.price}
+                    name="price"
+                    id="price"
+                />
 
                 {!bookId && (
                     <div>
