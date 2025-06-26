@@ -484,14 +484,19 @@ function remove(bookId) {
     return storageService.remove(BOOK_KEY, bookId)
 }
 
-function save(book) {
+function save(book, newGoogleBook) {
     console.log("book.id", book.id)
-    if (book.id) {
-        console.log("33333333333")
+    console.log("newGoogleBook", newGoogleBook)
+    if (book.id && !newGoogleBook) {
+        
+        console.log("put- update");
         return storageService.put(BOOK_KEY, book)
+        
     } else {
-        console.log("44444444")
+        
+        console.log("post - add");
         return storageService.post(BOOK_KEY, book)
+        
     }
 }
 

@@ -171,7 +171,8 @@ export function BookAdd() {
             .catch(() => {
                 // book not found, save it
                 console.log('Book not found, saving:', book)
-                bookService.save(book)
+                let newGoogleBook = true
+                bookService.save(book, newGoogleBook)
             })
 
     }

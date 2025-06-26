@@ -7,7 +7,6 @@ const { useState, useEffect } = React
 const { useNavigate, useParams } = ReactRouterDOM
 
 export function BookEdit() {
-
     const [bookToEdit, setBookToEdit] = useState(bookService.getEmptyBook())
     const { bookId } = useParams()
     const navigate = useNavigate()
@@ -39,14 +38,25 @@ export function BookEdit() {
     }
 
     function onSaveBook(ev) {
+        console.log("onSaveBook");
         ev.preventDefault()
-        bookService.save(bookToEdit)
+
+        // Only continue if ID or title exists
+        if (!bookToEdit.id && !bookToEdit.title) {
+            console.warn('Cannot save: Missing book ID and title')
+            return
+        }
+
+        console.log('bookToEdit.id', bookToEdit.id)
+
+        bookService.save(bookToEdit, false)
             .then((savedBook) => {
-                console.log('savedBook:', savedBook)
+                console.log('✅ savedBook:', savedBook)
                 navigate('/book')
             })
-            .catch(err => console.log('err:', err))
+            .catch(err => console.error('❌ Save failed:', err))
     }
+
     const { title, listPrice } = bookToEdit
     const price = listPrice.price
 
