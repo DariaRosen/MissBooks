@@ -84,8 +84,6 @@ export function BookEdit() {
     return (
         <section className="book-edit">
             <h1 className="animate__animated animate__bounce">{bookId ? 'Edit' : 'Add'} Book</h1>
-
-            {/* <h1>{bookId ? 'Edit' : 'Add'} Book</h1> */}
             <form onSubmit={onSaveBook}>
                 <label htmlFor="title">Title</label>
                 <input

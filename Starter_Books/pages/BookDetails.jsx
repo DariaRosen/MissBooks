@@ -31,7 +31,8 @@ export function BookDetails() {
     return (
         <section className="book-details">
             <h1 className="animate__animated animate__bounce">Book Title:</h1>
-            <h2>Subtitle: {book.subtitle}</h2>
+            <h2 style={{ fontFamily: 'Lobster, cursive' }}>Subtitle: {book.subtitle}</h2>
+            {/* <h2>Subtitle: {book.subtitle}</h2> */}
             <h3>Authors: {book.authors.join(', ')}</h3>
             <h4>Published: {book.publishedDate} {publishedDate(book.publishedDate)}</h4>
             <h4>Page Count: {book.pageCount} {readingDifficulty(book.pageCount)}</h4>

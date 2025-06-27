@@ -476,7 +476,8 @@ function query(filterBy = {}) {
 }
 
 function get(entityType, entityId) {
-    console.log('Looking for ID:', entityId)
+    console.trace('entityType', entityType)
+    console.log('entityId', entityId)
     return query(entityType).then(entities => {
         const entity = entities.find(entity => entity.id === entityId)
         if (!entity) throw new Error(`Get failed, cannot find entity with id: ${entityId} in: ${entityType}`)
@@ -641,7 +642,7 @@ function getAuthors() {
 
 function addReview(bookId, review) {
     // Use the existing 'get' function to retrieve the book by ID
-    return get(bookId).then(book => {
+    return get('booksDB', bookId).then(book => {
         // Initialize the reviews array if it doesn't exist
         if (!book.reviews) book.reviews = []
         review.id = utilService.makeId() // Make sure each review has a unique ID
@@ -654,7 +655,7 @@ function addReview(bookId, review) {
 }
 
 function removeReview(bookId, reviewId) {
-    return get(bookId).then(book => {
+    return get('booksDB', bookId).then(book => {
         if (!book.reviews) return book
 
         // Filter out the review with the given ID
