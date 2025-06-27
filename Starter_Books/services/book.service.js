@@ -669,7 +669,7 @@ function removeReview(bookId, reviewId) {
 function addGoogleBook(googleBook) {
     const id = googleBook.id
     const title = googleBook.volumeInfo && googleBook.volumeInfo.title
-
+    debugger
     const exists = booksDB.some(book => book.id === id || book.title === title)
     if (exists) {
         return Promise.resolve(null)
@@ -711,7 +711,66 @@ function getFromMemory(bookId) {
         })
 }
 
+function addGoogleBook(googleBook) {
+     // Already in app format — no need to map
+    if (googleBook.title && googleBook.listPrice) {
+        console.log("googleBook", googleBook)
+        return save(googleBook) // or whatever your save method is
+    }
+    console.log("1111111111111111111111")
+    const volumeInfo = googleBook.volumeInfo || {}
+    const imageLinks = volumeInfo.imageLinks || {}
+    const book = {
+        id: googleBook.id,
+        title: volumeInfo.title || 'No Title',
+        subtitle: volumeInfo.subtitle || '',
+        authors: volumeInfo.authors || ['Unknown Author'],
+        publishedDate: volumeInfo.publishedDate || '',
+        description: volumeInfo.description || '',
+        pageCount: volumeInfo.pageCount || 0,
+        categories: volumeInfo.categories || [],
+        imgUrl: imageLinks.thumbnail || '',
+        language: volumeInfo.language || 'en',
+        listPrice: {
+            price: getRandomPrice(),
+            currencyCode: getRandomCurrency(),
+            isOnSale: Math.random() > 0.7
+        }
+    }
 
+    return getFromMemory(book.id)
+        .then(() => null) // Already exists
+        .catch(() => save(book, true)) // Save new
+}
+
+function getRandomPrice() {
+    return Math.floor(Math.random() * 100) + 10
+}
+
+function getRandomCurrency() {
+    const currencies = ['USD', 'EUR', 'ILS']
+    return currencies[Math.floor(Math.random() * currencies.length)]
+}
+
+function mapGoogleBookToAppBook(googleBook) {
+    return {
+        id: googleBook.id,
+        title: googleBook.volumeInfo.title || 'No title',
+        subtitle: googleBook.volumeInfo.subtitle || '',
+        authors: googleBook.volumeInfo.authors || [],
+        publishedDate: googleBook.volumeInfo.publishedDate || '',
+        description: googleBook.volumeInfo.description || '',
+        pageCount: googleBook.volumeInfo.pageCount || 0,
+        categories: googleBook.volumeInfo.categories || [],
+        imgUrl: (googleBook.volumeInfo.imageLinks && googleBook.volumeInfo.imageLinks.thumbnail) || '',
+        language: googleBook.volumeInfo.language || 'en',
+        listPrice: {
+            price: getRandomPrice(),
+            currencyCode: getRandomCurrency(),
+            isOnSale: Math.random() > 0.5
+        }
+    }
+}
 
 export const bookService = {
     query,
@@ -726,4 +785,5 @@ export const bookService = {
     addGoogleBook,
     getBooks,
     getFromMemory,
+    mapGoogleBookToAppBook,
 }

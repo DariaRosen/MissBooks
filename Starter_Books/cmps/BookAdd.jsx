@@ -1,5 +1,7 @@
 const { useState, useEffect } = React
 import { bookService } from '../services/book.service.js'
+import { googleBookService } from '../services/google-book.service.js'
+
 export function BookAdd() {
     const allBooks = [
 
@@ -127,58 +129,59 @@ export function BookAdd() {
 
         setIsTyping(true)
 
+        // const timeoutId = setTimeout(() => {
+        //     const term = searchTerm.toLowerCase()
+        //     const filtered = allBooks.filter(book =>
+        //         book.title.toLowerCase().includes(term)
+        //     )
+        //     setFilteredBooks(filtered)
+        //     setIsTyping(false)
+        // }, 300)
+
         const timeoutId = setTimeout(() => {
-            const term = searchTerm.toLowerCase()
-            const filtered = allBooks.filter(book =>
-                book.title.toLowerCase().includes(term)
-            )
-            setFilteredBooks(filtered)
-            setIsTyping(false)
+            googleBookService.query(searchTerm)
+                .then(googleBooks => {
+                    if (!googleBooks) return setFilteredBooks([])
+
+                    const mappedBooks = googleBooks.map(bookService.mapGoogleBookToAppBook)
+                    setFilteredBooks(mappedBooks)
+                })
+                .catch(err => {
+                    console.error('❌ Error fetching from Google Books:', err)
+                })
+                .finally(() => setIsTyping(false))
         }, 300)
 
         return () => clearTimeout(timeoutId)
     }, [searchTerm])
 
     function onAddBook(book) {
-        // console.log('Fetching and adding:', book.title)
-        // console.log("book", book)
-        // fetch(`https://www.googleapis.com/books/v1/volumes?q=${encodeURIComponent(book.title)}`)
-        //     .then(res => res.json())
-        //     .then(data => {
-        //         if (!data.items || !data.items.length) {
-        //             console.warn('No book found on Google Books for:', book.title)
+        // next code able to add some dummy books to the database
+
+        // bookService.getFromMemory(book.id)
+        // bookService.get('bookDB', book.id)
+        //     .then(existingBook => {
+        //         if (existingBook) {
+        //             console.log('✅ Book already exists:', existingBook)
+        //             // book exists, ignore adding
         //             return
         //         }
-        //         const googleBook = data.items[0]
-        //         return bookService.addGoogleBook(googleBook)
-        //     })
-        //     .then(addedBook => {
-        //         if (!addedBook) {
-        //             console.log('Book already exists. Not added.')
-        //             return
-        //         }
-        //         console.log('Book added to local DB:', addedBook)
+
+        //         // book not found, save it
+        //         console.log('📚 Book not found, saving:', book)
+        //         const newGoogleBook = true
+        //         bookService.save(book, newGoogleBook)
         //     })
         //     .catch(err => {
-        //         console.error('❌ Failed to fetch or save book:', err)
+        //         console.error('❌ Unexpected error while checking book:', err)
         //     })
-        console.log("book.id 11111111111111111111111", book.id);
-        bookService.getFromMemory(book.id)
-            .then(existingBook => {
-                if (existingBook) {
-                    console.log('✅ Book already exists:', existingBook)
-                    // book exists, ignore adding
-                    return
-                }
-
-                // book not found, save it
-                console.log('📚 Book not found, saving:', book)
-                const newGoogleBook = true
-                bookService.save(book, newGoogleBook)
+        debugger
+        bookService.addGoogleBook(book)
+            .then(added => {
+                if (!added) console.log('Already exists')
+                else console.log('Added:', added)
             })
-            .catch(err => {
-                console.error('❌ Unexpected error while checking book:', err)
-            })
+            .catch(err => console.error('❌ Error:', err))
 
     }
 
