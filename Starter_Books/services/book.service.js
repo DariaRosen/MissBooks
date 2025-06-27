@@ -469,15 +469,21 @@ function query(filterBy = {}) {
             }
             if (filterBy.authors) {
                 console.log("filterBy.authors", filterBy.authors);
-                books = books.filter(book => book.authors.includes(filterBy.authors) )
+                books = books.filter(book => book.authors.includes(filterBy.authors))
             }
             return books
         })
 }
 
-function get(bookId) {
-    return storageService.get(BOOK_KEY, bookId).then(_setNextPrevBookId)
+function get(entityType, entityId) {
+    console.log('Looking for ID:', entityId)
+    return query(entityType).then(entities => {
+        const entity = entities.find(entity => entity.id === entityId)
+        if (!entity) throw new Error(`Get failed, cannot find entity with id: ${entityId} in: ${entityType}`)
+        return entity
+    })
 }
+
 
 function remove(bookId) {
     // return Promise.reject('Oh No!')
@@ -488,38 +494,38 @@ function save(book, newGoogleBook) {
     console.log("book.id", book.id)
     console.log("newGoogleBook", newGoogleBook)
     if (book.id && !newGoogleBook) {
-        
+
         console.log("put- update");
         return storageService.put(BOOK_KEY, book)
-        
+
     } else {
-        
+
         console.log("post - add");
         return storageService.post(BOOK_KEY, book)
-        
+
     }
 }
 
 function getEmptyBook(title = '', price = 0) {
-    
+
     return {
-            title,
-            subtitle: utilService.makeLorem(4),
-            authors: [
-                utilService.makeLorem(1)
-            ],
-            publishedDate: utilService.getRandomIntInclusive(1950, 2024),
-            description: utilService.makeLorem(20),
-            pageCount: utilService.getRandomIntInclusive(20, 600),
-            categories: [],
-            imgUrl: `./assets/img/${1}.jpg`,
-            language: "en",
-            listPrice: {
-                price,
-                currencyCode: "EUR",
-                isOnSale: Math.random() > 0.7
-            }
+        title,
+        subtitle: utilService.makeLorem(4),
+        authors: [
+            utilService.makeLorem(1)
+        ],
+        publishedDate: utilService.getRandomIntInclusive(1950, 2024),
+        description: utilService.makeLorem(20),
+        pageCount: utilService.getRandomIntInclusive(20, 600),
+        categories: [],
+        imgUrl: `./assets/img/${1}.jpg`,
+        language: "en",
+        listPrice: {
+            price,
+            currencyCode: "EUR",
+            isOnSale: Math.random() > 0.7
         }
+    }
 }
 
 function getDefaultFilter() {
@@ -609,7 +615,7 @@ function _createBooksDemo() {
             description: utilService.makeLorem(20),
             pageCount: utilService.getRandomIntInclusive(20, 600),
             categories: [ctgs[utilService.getRandomIntInclusive(0, ctgs.length - 1)]],
-            imgUrl: `./assets/img/${i+1}.jpg`,
+            imgUrl: `./assets/img/${i + 1}.jpg`,
             language: "en",
             listPrice: {
                 price: utilService.getRandomIntInclusive(80, 500),
@@ -626,7 +632,7 @@ function _createBooksDemo() {
 function getAuthors() {
 
     const books = loadFromStorage(BOOK_KEY) || []
-    const authors = books.map((book, index, arr)=>{
+    const authors = books.map((book, index, arr) => {
         return book.authors
     })
     //console.log(authors.flat())
@@ -674,8 +680,8 @@ function addGoogleBook(googleBook) {
         authors: (googleBook.volumeInfo && googleBook.volumeInfo.authors) || [],
         description: (googleBook.volumeInfo && googleBook.volumeInfo.description) || '',
         thumbnail: (googleBook.volumeInfo &&
-                    googleBook.volumeInfo.imageLinks &&
-                    googleBook.volumeInfo.imageLinks.thumbnail) || ''
+            googleBook.volumeInfo.imageLinks &&
+            googleBook.volumeInfo.imageLinks.thumbnail) || ''
     }
 
     booksDB.push(bookToAdd)
@@ -687,8 +693,26 @@ function getBooks() {
     return Promise.resolve(booksDB)
 }
 
+function getFromMemory(bookId) {
+    console.log('📚 getFromMemory - Checking in-memory DB for:', bookId)
 
-   export const bookService = {
+    return storageService.get(BOOK_KEY, bookId)
+        .then(book => {
+            if (!book) {
+                throw new Error(`Book with id ${bookId} not found in memory`)
+            }
+            console.log('✅ Book found in memory:', book)
+            return book
+        })
+        .catch(err => {
+            console.warn('❌ Book not found in memory, cannot continue:', err.message)
+            return null
+        })
+}
+
+
+
+export const bookService = {
     query,
     get,
     remove,
@@ -700,4 +724,5 @@ function getBooks() {
     removeReview,
     addGoogleBook,
     getBooks,
-    }
+    getFromMemory,
+}

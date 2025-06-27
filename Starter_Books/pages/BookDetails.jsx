@@ -15,7 +15,7 @@ export function BookDetails() {
     }, [params.bookId])
 
     function loadBook() {
-        bookService.get(params.bookId)
+        bookService.get('bookDB', params.bookId)
             .then(setBook)
             .catch(err => {
                 console.log('err:', err)
@@ -30,7 +30,7 @@ export function BookDetails() {
     if (!book) return <div>Loading...</div>
     return (
         <section className="book-details">
-            <h1>Book Title: {book.title}</h1>
+            <h1 className="animate__animated animate__bounce">Book Title:</h1>
             <h2>Subtitle: {book.subtitle}</h2>
             <h3>Authors: {book.authors.join(', ')}</h3>
             <h4>Published: {book.publishedDate} {publishedDate(book.publishedDate)}</h4>

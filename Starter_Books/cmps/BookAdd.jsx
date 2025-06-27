@@ -162,17 +162,22 @@ export function BookAdd() {
         //     .catch(err => {
         //         console.error('❌ Failed to fetch or save book:', err)
         //     })
-        console.log("11111");
-        bookService.get(book.id)
+        console.log("book.id 11111111111111111111111", book.id);
+        bookService.getFromMemory(book.id)
             .then(existingBook => {
-                console.log('Book already exists:', existingBook)
-                // book exists, ignore adding
-            })
-            .catch(() => {
+                if (existingBook) {
+                    console.log('✅ Book already exists:', existingBook)
+                    // book exists, ignore adding
+                    return
+                }
+
                 // book not found, save it
-                console.log('Book not found, saving:', book)
-                let newGoogleBook = true
+                console.log('📚 Book not found, saving:', book)
+                const newGoogleBook = true
                 bookService.save(book, newGoogleBook)
+            })
+            .catch(err => {
+                console.error('❌ Unexpected error while checking book:', err)
             })
 
     }

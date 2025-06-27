@@ -35,7 +35,7 @@ export function BookEdit() {
     }, [])
 
     function loadBook() {
-        bookService.get(bookId)
+        bookService.get('bookDB', bookId)
             .then(book => setBookToEdit(book))
             .catch(err => {
                 console.log('Problem getting book', err);
@@ -72,6 +72,10 @@ export function BookEdit() {
             .catch(err => console.error('❌ Save failed:', err))
     }
 
+    function onBack() {
+        navigate('/book')
+    }
+
     const { title, listPrice } = bookToEdit
     const price = listPrice.price
 
@@ -79,7 +83,9 @@ export function BookEdit() {
     console.log("booToedit", bookToEdit)
     return (
         <section className="book-edit">
-            <h1>{bookId ? 'Edit' : 'Add'} Book</h1>
+            <h1 className="animate__animated animate__bounce">{bookId ? 'Edit' : 'Add'} Book</h1>
+
+            {/* <h1>{bookId ? 'Edit' : 'Add'} Book</h1> */}
             <form onSubmit={onSaveBook}>
                 <label htmlFor="title">Title</label>
                 <input
@@ -108,6 +114,7 @@ export function BookEdit() {
                 )}
 
                 <button>Save</button>
+                <button onClick={onBack}>Back</button>
             </form>
         </section>
     )

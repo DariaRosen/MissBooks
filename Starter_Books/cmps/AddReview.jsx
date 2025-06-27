@@ -75,7 +75,7 @@ export function AddReview({ book }) {
                 <div className="modal">
                     <form className="review-form" onSubmit={onSaveReview}>
                         <label>
-                            {/* <h1 className="animate__animated animate__bounce">Full Name:</h1> */}
+                            <h1 className="animate__animated animate__bounce">Full Name:</h1>
                             Full Name:
                             <input type="text" name="fullname" required />
                         </label>
