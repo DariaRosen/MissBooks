@@ -491,10 +491,10 @@ function remove(bookId) {
     return storageService.remove(BOOK_KEY, bookId)
 }
 
-function save(book, newGoogleBook) {
+function save(book, addNew) {
     console.log("book.id", book.id)
-    console.log("newGoogleBook", newGoogleBook)
-    if (book.id && !newGoogleBook) {
+    console.log("addNew", addNew)
+    if (book.id && !addNew) {
 
         console.log("put- update");
         return storageService.put(BOOK_KEY, book)
@@ -650,7 +650,7 @@ function addReview(bookId, review) {
         book.reviews.push(review)
 
         // Save the updated book back to storage
-        return save(book)
+        return save(book, { addNew: false })
     })
 }
 
@@ -662,7 +662,7 @@ function removeReview(bookId, reviewId) {
         book.reviews = book.reviews.filter(review => review.id !== reviewId)
 
         // Save the updated book
-        return save(book)
+        return save(book, { addNew: false })
     })
 }
 
@@ -715,7 +715,7 @@ function addGoogleBook(googleBook) {
      // Already in app format — no need to map
     if (googleBook.title && googleBook.listPrice) {
         console.log("googleBook", googleBook)
-        return save(googleBook) // or whatever your save method is
+        return save(googleBook, { addNew: true }) 
     }
     console.log("1111111111111111111111")
     const volumeInfo = googleBook.volumeInfo || {}
@@ -740,7 +740,7 @@ function addGoogleBook(googleBook) {
 
     return getFromMemory(book.id)
         .then(() => null) // Already exists
-        .catch(() => save(book, true)) // Save new
+        .catch(() => save(book, { addNew: false })) // Save new
 }
 
 function getRandomPrice() {

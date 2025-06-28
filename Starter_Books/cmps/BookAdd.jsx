@@ -175,7 +175,6 @@ export function BookAdd() {
         //     .catch(err => {
         //         console.error('❌ Unexpected error while checking book:', err)
         //     })
-        debugger
         bookService.addGoogleBook(book)
             .then(added => {
                 if (!added) console.log('Already exists')

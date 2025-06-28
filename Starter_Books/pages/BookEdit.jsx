@@ -58,7 +58,6 @@ export function BookEdit() {
 
         // Only continue if ID or title exists
         if (!bookToEdit.id && !bookToEdit.title) {
-            debugger
             
             console.warn('Cannot save: Missing book ID and title')
             return
@@ -66,7 +65,7 @@ export function BookEdit() {
 
         console.log('bookToEdit.id', bookToEdit.id)
 
-        bookService.save(bookToEdit, false)
+        bookService.save(bookToEdit, { addNew: false })
             .then((savedBook) => {
                 console.log('✅ savedBook:', savedBook)
                 navigate('/book')
